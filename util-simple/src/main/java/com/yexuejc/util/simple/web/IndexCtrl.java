@@ -34,38 +34,5 @@ public class IndexCtrl {
         return "yexuejc-util Simple Project by Spring Boot.\t\n version:" + version;
     }
 
-    @RequestMapping(value = "/consumerBat", method = RequestMethod.POST)
-    public Object consumerBat(@RequestParam(value = "filename") MultipartFile file, HttpServletRequest request,
-                              HttpServletResponse response)
-            throws IOException {
 
-        //判断文件是否为空
-        if (file == null) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return Resps.error("文件不能为空！");
-        }
-
-        //获取文件名
-        String fileName = file.getOriginalFilename();
-
-        //验证文件名是否合格
-        if (!ExcelImportUtils.validateExcel(fileName)) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return Resps.error("文件必须是excel格式！");
-        }
-
-        //进一步判断文件内容是否为空（即判断其大小是否为0或其名称是否为null）
-        long size = file.getSize();
-        if (StringUtils.isEmpty(fileName) || size == 0) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return Resps.error("文件不能为空！");
-        }
-
-        //批量导入
-//        Map<String, Object> map = consumerSrv.consumerBat(fileName, file);
-//        if (!map.get("rc").equals("S")) {
-//            return new Resps<>("E", new String[]{map.get("msg").toString()});
-//        }
-        return Resps.success(RespsConstant.MSG_SUCCESS_HTTP);
-    }
 }
