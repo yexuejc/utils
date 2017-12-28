@@ -1,0 +1,7 @@
+CREATE TABLE tb_user(
+  id VARCHAR(32) PRIMARY KEY ,
+  mobile VARCHAR(11) NOT NULL ,
+  pwd VARCHAR(32) NOT NULL ,
+  alias VARCHAR(50),
+  intro VARCHAR(255)
+)

@@ -1,5 +1,7 @@
 package com.yexuejc.util.simple.pojo;
 
+import com.yexuejc.util.base.util.StrUtil;
+
 import java.io.Serializable;
 
 /**
@@ -82,5 +84,10 @@ public class User implements Serializable {
                 ", alias='" + alias + '\'' +
                 ", intro='" + intro + '\'' +
                 '}';
+    }
+
+    public static void main(String[] args) {
+        System.out.println(StrUtil.genUUID());
+        System.out.println(StrUtil.toMD5("123456"));
     }
 }

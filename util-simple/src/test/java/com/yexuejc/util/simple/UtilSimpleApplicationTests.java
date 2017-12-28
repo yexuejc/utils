@@ -9,9 +9,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class UtilSimpleApplicationTests {
 
-	@Test
-	public void contextLoads() {
-		System.out.println("xxxx");
-	}
+    @Test
+    public void contextLoads() {
+        System.out.println("start>>>>>>>>>");
+        System.out.println("end>>>>>>>>>>");
+    }
 
 }
