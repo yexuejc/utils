@@ -266,5 +266,6 @@
     </repositories>
     <modules>
         <module>util-base</module>
+        <module>util-simple</module>
     </modules>
 </project>
