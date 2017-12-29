@@ -6,6 +6,7 @@ import com.yexuejc.util.base.http.Resps;
 import com.yexuejc.util.simple.constant.IMapConstant;
 import com.yexuejc.util.simple.pojo.User;
 import com.yexuejc.util.simple.service.ExcelSrv;
+import com.yexuejc.util.simple.service.UserSrv;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,8 @@ public class ExcelCtrl {
 
     @Autowired
     ExcelSrv excelSrv;
+    @Autowired
+    UserSrv userSrv;
 
     /**
      * 下载xecel模板
@@ -123,10 +126,15 @@ public class ExcelCtrl {
         for (User user : userList) {
             System.out.println(user.toString());
         }
+
+        boolean b = userSrv.addUsers(userList);
+
         //删除上传的临时文件
         if (tmpFile.exists()) {
             tmpFile.delete();
         }
         return Resps.success(RespsConstant.MSG_SUCCESS_HTTP);
     }
+
+
 }

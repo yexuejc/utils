@@ -157,7 +157,7 @@ public class ExcelSrvImpl implements ExcelSrv {
                             break;
                         case 2:
                             //pwd
-                            user.setPwd(getCell(cell));
+                            user.setPwd(StrUtil.toMD5(getCell(cell)));
                             break;
                         case 3:
                             //简介

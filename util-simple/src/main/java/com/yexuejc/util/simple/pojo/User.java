@@ -34,6 +34,10 @@ public class User implements Serializable {
      * 简介
      */
     private String intro;
+    /**
+     * 头像
+     */
+    private String head;
 
     public String getId() {
         return id;
@@ -75,6 +79,14 @@ public class User implements Serializable {
         this.intro = intro;
     }
 
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -83,11 +95,7 @@ public class User implements Serializable {
                 ", pwd='" + pwd + '\'' +
                 ", alias='" + alias + '\'' +
                 ", intro='" + intro + '\'' +
+                ", head='" + head + '\'' +
                 '}';
-    }
-
-    public static void main(String[] args) {
-        System.out.println(StrUtil.genUUID());
-        System.out.println(StrUtil.toMD5("123456"));
     }
 }

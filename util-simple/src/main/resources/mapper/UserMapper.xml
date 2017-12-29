@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yexuejc.util.simple.domain.UserMapper">
+
+    <insert id="saveUser">
+        INSERT INTO tb_user (id, pwd, mobile, alias, intro, head, crt_time, crt_by, mdfy_time, mdfy_by)
+        VALUES (#{id}, #{pwd}, #{mobile}, #{alias}, #{intro}, #{head}, now(), #{id}, now(), #{id})
+    </insert>
+    <resultMap type="com.yexuejc.util.simple.pojo.User" id="UserMap">
+        <id column="id" property="id"/>
+        <result column="pwd" property="pwd"/>
+        <result column="mobile" property="mobile"/>
+        <result column="alias" property="alias"/>
+        <result column="intro" property="intro"/>
+        <result column="head" property="head"/>
+    </resultMap>
+    <select id="getUsers" resultMap="UserMap">
+        SELECT
+            id,
+            pwd,
+            mobile,
+            alias,
+            intro,
+            head
+        FROM tb_user;
+    </select>
+
+</mapper>
