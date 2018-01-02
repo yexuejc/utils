@@ -178,4 +178,18 @@ public final class StrUtil {
             return coded;
         }
     }
+
+
+    /**
+     * 替换手机号中间4位为*
+     *
+     * @param mobile
+     * @return String
+     * @Title: replaceMobile
+     * @Description: 替换手机号中间4位为*
+     * @throw
+     */
+    public static String replaceMobile(String mobile) {
+        return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+    }
 }

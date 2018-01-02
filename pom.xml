@@ -267,5 +267,6 @@
     <modules>
         <module>util-base</module>
         <module>util-simple</module>
+        <module>util-exp</module>
     </modules>
 </project>
