@@ -17,7 +17,7 @@
     <parent>
         <groupId>com.github.yexuebm.utils</groupId>
         <artifactId>util-parent</artifactId>
-        <version>0.0.4</version>
+        <version>0.0.5</version>
     </parent>
 
 ```
