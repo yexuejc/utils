@@ -268,5 +268,6 @@
         <module>util-base</module>
         <module>util-simple</module>
         <module>util-exp</module>
+        <module>util-redis</module>
     </modules>
 </project>
