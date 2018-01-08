@@ -73,6 +73,7 @@
 
     <build>
         <!--多环境配置-->
+        <!-- 使用maven过滤器,因spring中使用${}占位符,所以spring-boot-starter-parent将maven过滤器的占位符改为@...@ -->
         <!--<filters>-->
             <!--<filter>src/main/filters/filter-${env}.properties</filter>-->
         <!--</filters>-->
@@ -92,18 +93,21 @@
     </build>
 
     <profiles>
+        <!--本地环境-->
         <profile>
             <id>dev</id>
             <properties>
                 <env>dev</env>
             </properties>
         </profile>
+        <!--测试环境-->
         <profile>
             <id>ivt</id>
             <properties>
                 <env>ivt</env>
             </properties>
         </profile>
+        <!--正式环境-->
         <profile>
             <id>prod</id>
             <properties>

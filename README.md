@@ -1,4 +1,4 @@
-###SpringBoot 项目整理###
+### SpringBoot 项目整理
 
 >基础引用
 ```
@@ -52,6 +52,9 @@
 > 原因说明：test运行环境基于.../util-simple/src/test/resources/application.properties
 正式运行基于环境util-simple/src/main/resources/pplication.properties
 两者不相冲突
+
+
+[关于多环境env配置](util-simple/evn.md)
 
 
 
