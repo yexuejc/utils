@@ -23,4 +23,10 @@ public class IndexCtrl {
         mv.addObject("version", version);
         return mv;
     }
+
+    @RequestMapping(value = "/md/full")
+    public ModelAndView mdFull() {
+        ModelAndView mv = new ModelAndView("full");
+        return mv;
+    }
 }
