@@ -29,7 +29,7 @@ companion object {
 1、  加上转义标识
 ```
 @Value(value = "\${application.version}")
-private String version;
+val version: String? = null
 ```
 2、修改@Value中的标识符$修改为其他
 ```
@@ -59,5 +59,7 @@ fun main(args: Array<String>) {
    SpringApplication.run(Application::class.java, *args)
 }
 ```
+
+_ps:第二种方式还没试过_
 
 >感谢大佬[@骑驴上塔楼](https://segmentfault.com/u/qilvshangtalou),参考链接[https://segmentfault.com/u/qilvshangtalou](https://segmentfault.com/u/qilvshangtalou)

@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest
 import com.yexuejc.util.base.util.StrUtil
 import com.yexuejc.util.base.http.Resps
 import com.yexuejc.util.base.util.FileUtil
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import java.io.File
+import java.util.logging.Logger
 
 
 /**
@@ -23,6 +26,8 @@ import org.springframework.beans.factory.annotation.Value
 @RestController
 @RequestMapping("/file")
 class UpdateCtrl {
+    internal var logger = LoggerFactory.getLogger(this.javaClass)
+
     private val DATA_N = "N"
     private val DATA_Y = "Y"
     private val TYPE_A = "A"
@@ -51,9 +56,27 @@ class UpdateCtrl {
         var filePath: String? = ""
         if (file != null && !file.isEmpty) {
             filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "." + FileUtil
-                    .getFileType(file.getOriginalFilename());
+                    .getFileType(file.getOriginalFilename())
+            // 转存文件
+            logger.info("文件保存路径：{}", filePath)
+            file.transferTo(File(filePath))
+        } else {
+            mv.addObject("code", "文件为空")
+            mv.addObject("msg", RespsConstant.CODE_FAIL)
+            return mv;
         }
-
+        model.fileUrl = filePath
+        model.fileSize = file.size
+        logger.info("文件信息：{}", model.toString())
+        val result:Int? = 0 //fileSrv.save(model)
+        if (result!! > 0) {
+            mv.addObject("ret", "S")
+            mv.addObject("msg", "上传成功")
+            mv.addObject("data", filePath)
+        } else {
+            mv.addObject("ret", "E")
+            mv.addObject("msg", "上传成功，数据创建失败。文件路径：" + filePath)
+        }
         return mv;
     }
 
