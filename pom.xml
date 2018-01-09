@@ -269,5 +269,6 @@
         <module>util-simple</module>
         <module>util-exp</module>
         <module>util-redis</module>
+        <module>util-kotlin</module>
     </modules>
 </project>
