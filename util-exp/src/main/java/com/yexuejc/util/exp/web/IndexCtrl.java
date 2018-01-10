@@ -24,9 +24,13 @@ public class IndexCtrl {
         return mv;
     }
 
-    @RequestMapping(value = "/md/full")
+    @RequestMapping(value = "/md-full")
     public ModelAndView mdFull() {
         ModelAndView mv = new ModelAndView("full");
+        return mv;
+    } @RequestMapping(value = "/md-menu")
+    public ModelAndView mdMenu() {
+        ModelAndView mv = new ModelAndView("menu");
         return mv;
     }
 }
