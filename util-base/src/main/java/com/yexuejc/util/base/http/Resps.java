@@ -15,6 +15,7 @@ import java.util.Arrays;
  */
 public class Resps<T> implements Serializable {
 
+
     /**
      * 状态
      */
@@ -51,6 +52,23 @@ public class Resps<T> implements Serializable {
     public Resps(String code, String msg) {
         this.code = code;
         this.msg = new String[]{msg};
+    }
+
+    public Resps<T> setSucc(T t) {
+        setSucc(t, RespsConstant.MSG_SUCCESS_OPERATE);
+        return this;
+    }
+
+    public Resps<T> setSucc(T t, String msg) {
+        setSucc(t, new String[]{msg});
+        return this;
+    }
+
+    public Resps<T> setSucc(T t, String[] msg) {
+        this.setData(t);
+        this.setCode(RespsConstant.CODE_SUCCESS);
+        this.setMsg(msg);
+        return this;
     }
 
     public static Resps success(String msg) {

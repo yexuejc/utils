@@ -8,6 +8,8 @@
     <title>yexue</title>
     <script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"
             th:src="@{/js/jquery-2.1.4.min.js}"></script>
+    <script type="text/javascript" src="../static/js/jquery.form.min.js"
+            th:src="@{/js/jquery.form.min.js}"></script>
     <style>
         * {
             margin: 0;
@@ -61,6 +63,32 @@
             color: white;
         }
 
+        .progress_container {
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .progress {
+            position: relative;
+            border: 1px solid #ddd;
+            padding: 1px;
+            border-radius: 3px;
+        }
+
+        .bar {
+            background-color: #B4F5B4;
+            width: 0%;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .percent {
+            position: absolute;
+            display: inline-block;
+            top: 0px;
+            left: 48%;
+        }
 
     </style>
 </head>
@@ -106,8 +134,9 @@
                 </tr>
                 <tr>
                     <td>提交:</td>
-                    <td><input type="submit" value="同步提交文件" class="button"/>&nbsp;&nbsp;
-                        <input type="button" value="异步提交文件" id="uploadJson" class="button"/>
+                    <td>
+                        <input type="submit" value="提交文件" class="button"/>
+                        <input type="button" id="uploadAjax" value="提交文件2" class="button"/>
                     </td>
                 </tr>
             </table>
@@ -115,38 +144,80 @@
     </div>
     <div class="right">
         <div style="padding: 10px;">
-            <span>异步提交结果</span>
-            <div style="background-color: white;" id="uploadJsonResult"></div>
+            <div style="padding: 10px;">提交状态</div>
+            <div class="progress_container">
+                <div class="progress">
+                    <div class="bar"></div>
+                    <div class="percent">0%</div>
+                </div>
+                <div style="text-align: center;margin-top: 10px;color: #999999">
+                    size: <span class="total">0</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                    position: <span class="position">0</span>
+                </div>
+            </div>
+            <div style="padding: 10px;">提交结果</div>
+            <div style="background-color: white;widht:100%;word-wrap: break-word"
+                 id="uploadJsonResult"></div>
         </div>
     </div>
 </div>
-
 <script th:inline="javascript">
     $(function () {
-        $(".right").css("height", $(".left").css("height"));
-
-        $("#uploadJson").click(function () {
-            var formData = new FormData($("#uploadFrom")[0]);
-            console.log(formData);
-            $.ajax({
-                type: "post",
-                url: /*[[@{/file/upload/json}]]*/"/file/upload/json",
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                success: function (returndata) {
-                    $("#fileUrl").val(returndata.data);
-                    $("#uploadJsonResult").text(JSON.stringify(returndata));
-                },
-                error: function (returndata) {
-                    $("#uploadJsonResult").text(JSON.stringify(returndata));
+        var bar = $('.bar');
+        var percent = $('.percent');
+        var status = $('#status');
+        $('form').ajaxForm({
+            beforeSerialize: function () {
+                //alert("表单数据序列化前执行的操作！");
+                //$("#txt2").val("java");//如：改变元素的值
+            },
+            beforeSubmit: function () {
+                //alert("表单提交前的操作");
+                var filesize = $("input[type='file']")[0].files[0].size / 1024 / 1024;
+                if (filesize > 5000) {
+                    alert("文件大小超过限制，最多5000M");
+                    return false;
                 }
-            });
-        })
-    })
+                //if($("#txt1").val()==""){return false;}//如：验证表单数据是否为空
+            },
+            beforeSend: function () {
+                status.empty();
+                var percentVal = '0%';
+                bar.width(percentVal)
+                percent.html(percentVal);
+            },
+            uploadProgress: function (event, position, total, percentComplete) {//上传的过程
+                //position 已上传了多少
+                //total 总大小
+                //已上传的百分数
+                var percentVal = percentComplete + '%';
+                bar.width(percentVal)
+                percent.html(percentVal);
+                if (parseFloat(total / 1024 / 1024) < 1) {
+                    $(".total").text(parseFloat(total / 1024).toFixed(2) + "KB");
+                    $(".position").text(parseFloat(position / 1024).toFixed(2) + "KB");
+                } else {
+                    $(".total").text(parseFloat(total / 1024 / 1024).toFixed(2) + "MB");
+                    $(".position").text(parseFloat(position / 1024 / 1024).toFixed(2) + "MB");
+                }
+
+            },
+            success: function (data) {//成功
+                var percentVal = '100%';
+                bar.width(percentVal)
+                percent.html(percentVal);
+                $("#uploadJsonResult").text(JSON.stringify(data));
+            },
+            error: function (err) {//失败
+                $("#uploadJsonResult").text(JSON.stringify(err));
+            },
+            complete: function (xhr) {//完成
+                $("#uploadJsonResult").text($("#uploadJsonResult").text() + "\n 传输完成。");
+            }
+        });
+
+    });
+
 </script>
 </body>
 
