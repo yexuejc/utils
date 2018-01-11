@@ -5,11 +5,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>yexue</title>
-    <script type="text/javascript" src="${springMacroRequestContext.contextPath}/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../static/js/jquery-2.1.4.min.js"
+            th:src="@{/js/jquery-2.1.4.min.js}"></script>
 </head>
 
 <body>
-<h2>文件上传实例</h2>
+<h2 th:text="${title}">详情</h2>
 <p th:text="|状态：${code}|">状态：</p>
 <p th:text="|消息：${msg}|">消息：</p>
 <p th:text="|data：${data}|">消息：</p>

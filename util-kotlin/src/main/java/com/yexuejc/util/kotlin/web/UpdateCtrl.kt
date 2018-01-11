@@ -1,22 +1,22 @@
 package com.yexuejc.util.kotlin.web
 
 import com.yexuejc.util.base.constant.RespsConstant
+import com.yexuejc.util.base.http.Resps
+import com.yexuejc.util.base.util.FileUtil
+import com.yexuejc.util.base.util.StrUtil
+import com.yexuejc.util.kotlin.service.IFileSrv
 import com.yexuejc.util.kotlin.web.vo.UploadFileModel
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.servlet.ModelAndView
-import javax.servlet.http.HttpServletRequest
-import com.yexuejc.util.base.util.StrUtil
-import com.yexuejc.util.base.http.Resps
-import com.yexuejc.util.base.util.FileUtil
-import com.yexuejc.util.kotlin.service.IFileSrv
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import java.io.File
-import java.util.logging.Logger
+import javax.servlet.http.HttpServletRequest
 
 
 /**
@@ -54,8 +54,8 @@ class UpdateCtrl {
     @RequestMapping(value = "/upload", produces = arrayOf("multipart/form-data;charset=UTF-8"))
     fun upload(@RequestParam("file") file: MultipartFile, model: UploadFileModel,
                request: HttpServletRequest): ModelAndView {
-        var mv = ModelAndView("succ");
-        var resps = checkUploadFileModel(model);
+        var mv = ModelAndView("succ")
+        var resps = checkUploadFileModel(model)
         if (resps.code != RespsConstant.CODE_SUCCESS) {
             mv.addObject("code", resps.code)
             mv.addObject("msg", resps.msg)
@@ -93,14 +93,18 @@ class UpdateCtrl {
     /**
      * 异步上传
      */
-    @RequestMapping(value = "/upload/json", produces = arrayOf("multipart/form-data;charset=UTF-8"))
-    fun uploadAjax(@RequestParam("file") file: MultipartFile, model: UploadFileModel,
-                   request: HttpServletRequest): Any {
-        var mv = ModelAndView("succ");
-        var checkResps = checkUploadFileModel(model);
+    @RequestMapping(value = "/upload/json")
+    fun uploadAjax(model: UploadFileModel, request: HttpServletRequest): Any {
+        var mv = ModelAndView("succ")
+        var checkResps = checkUploadFileModel(model)
         if (checkResps.code != RespsConstant.CODE_SUCCESS) {
             return checkResps
         }
+        // 判断文件是否为空
+        val multipartRequest = request as MultipartHttpServletRequest
+        // 获取上传文件名
+        val file = multipartRequest.getFile("file")
+
         var filePath: String? = ""
         if (file != null && !file.isEmpty) {
             FileUtil.judeDirExists(File(rootPath))

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service
  */
 @Service
 class FileSrvImpl : IFileSrv {
+
+
     @Autowired
     val fileMapper: IFileMapper? = null
 
@@ -23,4 +25,11 @@ class FileSrvImpl : IFileSrv {
     override fun save(model: UploadFileModel): Int {
         return fileMapper!!.save(model)
     }
+    override fun list(): List<UploadFileModel> {
+        return fileMapper!!.list()
+    }
+    override fun getUploadById(id: String): UploadFileModel {
+        return fileMapper!!.getUploadById(id)
+    }
+
 }
