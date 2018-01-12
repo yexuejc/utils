@@ -5,6 +5,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>yexue</title>
 		<script type="text/javascript" th:src="@{/js/jquery-2.1.4.min.js}"></script>
+		<style>
+			td{
+				max-width: 300px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -29,12 +34,15 @@
 				<td th:text="${up.ismust}">Y</td>
 				<td th:text="${up.crtTime}">-</td>
 				<td th:text="${up.note}">更新说明</td>
-				<td th:text="${up.fileSize}">-</td>
+				<td th:text="${#numbers.formatDecimal(up.fileSize%(1024/1024),2, 0)}">更新说明</td>
+				<td
+                        th:text="${(up.fileSize/1024/1024)<1?up.fileSize/1024+'.'+#numbers.formatDecimal(up.fileSize%1024, 2, 0)+'KB':up.fileSize/1024/1024+'.'+#numbers.formatDecimal(up.fileSize%(1024/1024), 2, 0)+'MB'}">-</td>
 				<td>
 					<a th:href="|@{/file/download}?id=${up.id}|" target="_blank">下载</a>
 				</td>
 			</tr>
 		</table>
+
 	</body>
 
 </html>
