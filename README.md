@@ -14,7 +14,7 @@
 
 **module**
 
-1.**util-parent** 父module 
+1.**[util-parent](/README.md)** 父module 
 ```
     <parent>
         <groupId>com.github.yexuebm.utils</groupId>
@@ -25,7 +25,7 @@
 ```
 
 
-2.**util-base** 基础module
+2.**[util-base](/util-base/README.md)** 基础module
 
 ```
 ...
@@ -40,7 +40,7 @@
 	</dependencies>
 ```
 
-3.**util-simple** demo,springboot web项目
+3.**[util-simple](/util-simple/README.md)** demo,springboot web项目
 
 可分环境,放开pom.xml中如下注释，不放开注释*com.yexuejc.util.simple.UtilSimpleApplication*
 无法直接运行。测试可运行*com.yexuejc.util.simple.ApplicationRun*
@@ -60,7 +60,7 @@
 
 
 
-4.**util-exp** 记录 Exception 相关 module
+4.**[util-exp](/util-exp/src/main/resources/md/menu.md)** 记录 Exception 相关 module
 
 ```
 ...
@@ -75,7 +75,7 @@
 	</dependencies>
 ```
 
-5.**util-redis** redis 相关 module
+5.**[util-redis](/util-redis/README.md)** redis 相关 module
 
 ```
 ...
@@ -90,3 +90,4 @@
 	</dependencies>
 ```
 
+6.**[util-kotlin](/util-kotlin/README.md)** 使用kotlin+thymeleaf+springboot 搭建的练手项目
