@@ -1,48 +1,56 @@
 <!DOCTYPE>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>yexue</title>
-		<script type="text/javascript" th:src="@{/js/jquery-2.1.4.min.js}"></script>
-		<style>
-			td{
-				max-width: 300px;
-			}
-		</style>
-	</head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>yexue</title>
+    <script type="text/javascript" th:src="@{/js/jquery-2.1.4.min.js}"></script>
+    <style>
+        td {
+            max-width: 300px;
+            min-width: 40px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
 
-	<body>
-		<h2>更新历史</h2>
-		<table border="1" style="border-collapse:collapse;width: 100%;">
-			<tr>
-				<th>版本号</th>
-				<th>code</th>
-				<th>客户端</th>
-				<th>支持最低版本号</th>
-				<th>是否强制更新</th>
-				<th>上传时间</th>
-				<th>更新说明</th>
-				<th>大小</th>
-				<th>操作</th>
-			</tr>
-			<tr th:each="up : ${list}">
-				<td th:text="${up.version}">1.0</td>
-				<td th:text="${up.code}">1</td>
-				<td th:text="${up.type}">A</td>
-				<td th:text="${up.minVersion}">1.0</td>
-				<td th:text="${up.ismust}">Y</td>
-				<td th:text="${up.crtTime}">-</td>
-				<td th:text="${up.note}">更新说明</td>
-				<td th:text="${#numbers.formatDecimal(up.fileSize%(1024/1024),2, 0)}">更新说明</td>
-				<td
-                        th:text="${(up.fileSize/1024/1024)<1?up.fileSize/1024+'.'+#numbers.formatDecimal(up.fileSize%1024, 2, 0)+'KB':up.fileSize/1024/1024+'.'+#numbers.formatDecimal(up.fileSize%(1024/1024), 2, 0)+'MB'}">-</td>
-				<td>
-					<a th:href="|@{/file/download}?id=${up.id}|" target="_blank">下载</a>
-				</td>
-			</tr>
-		</table>
+<body>
+<h2>更新历史</h2>
+<table border="1" style="border-collapse:collapse;width: 100%;">
+    <tr>
+        <th>版本号</th>
+        <th>code</th>
+        <th>客户端</th>
+        <th>支持最低版本号</th>
+        <th>是否强制更新</th>
+        <th>上传时间</th>
+        <th>更新说明</th>
+        <th>大小</th>
+        <th>文件名</th>
+        <th>操作</th>
+    </tr>
+    <tr th:each="up,stat : ${list}">
+        <td th:text="${up.version}">1.0</td>
+        <td th:text="${up.code}">1</td>
+        <td th:text="${up.type}">A</td>
+        <td th:text="${up.minVersion}">1.0</td>
+        <td th:text="${up.ismust}">Y</td>
+        <td th:text="${up.crtTime}">-</td>
+        <td th:text="${up.note}">更新说明</td>
+        <!--用下标取对于元素：list2后端返回-->
+        <!--<td th:text=" ${list2[stat.index].fileSize}">-</td>-->
+        <td th:text="${(up.fileSize/1024.0/1024.0)<1 ? #numbers.formatDecimal(up.fileSize/1024.0,0,2)+'KB' : #numbers.formatDecimal(up.fileSize/1024.0/1024.0,0,2)+'MB'}">
+            -
+        </td>
+        <td th:text="${(up.fileUrl).substring((up.fileUrl).lastIndexOf('/')+1)}"></td>
+        <td>
+            <a th:href="|@{/file/download}?id=${up.id}|" target="_blank">下载</a>
+        </td>
+    </tr>
+</table>
 
-	</body>
+</body>
 
 </html>

@@ -64,8 +64,7 @@ class UpdateCtrl {
         var filePath: String? = ""
         if (file != null && !file.isEmpty) {
             FileUtil.judeDirExists(File(rootPath))
-            filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "." + FileUtil
-                    .getFileType(file.getOriginalFilename())
+            filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "_" + file.getOriginalFilename()
             // 转存文件
             logger.info("文件保存路径：{}", filePath)
             file.transferTo(File(filePath))
@@ -108,8 +107,7 @@ class UpdateCtrl {
         var filePath: String? = ""
         if (file != null && !file.isEmpty) {
             FileUtil.judeDirExists(File(rootPath))
-            filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "." + FileUtil
-                    .getFileType(file.getOriginalFilename())
+            filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "_" + file.getOriginalFilename()
             // 转存文件
             logger.info("文件保存路径：{}", filePath)
             file.transferTo(File(filePath))

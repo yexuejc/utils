@@ -14,10 +14,10 @@ public class FileUtil {
     private static final String TAR_GZ = "tar.gz";
 
     public static String getFileType(String fileName) {
-        if (fileName.indexOf(TYPE_TAR_GZ) + TYPE_TAR_GZ.length() == fileName.length()) {
+        if (fileName.lastIndexOf(TYPE_TAR_GZ) >0) {
             return TAR_GZ;
         }
-        return fileName.substring(fileName.indexOf(".") + 1);
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     // 判断文件是否存在

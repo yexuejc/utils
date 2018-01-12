@@ -14,4 +14,5 @@ open class UtilKotlinApplication {
             SpringApplication.run(UtilKotlinApplication::class.java, *args)
         }
     }
+
 }
