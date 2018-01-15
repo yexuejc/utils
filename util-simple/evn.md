@@ -35,12 +35,12 @@ pom.xml引入
 ...
 ```
 在Maven Projects选择本地环境
-![1](src/test/resources/imgs/profiles.png)
+![1](../static/images/profiles.png)
 
 即 `filter-${env}.properties`中`${env}`指向`<env>dev</env>`
 时环境配置文件为实际指向`src/main/filters/filter-dev.properties`
 
-![1](src/test/resources/imgs/env.png)
+![1](../static/images/env.png)
 
 *********************************
 >详细配置

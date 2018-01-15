@@ -9,6 +9,8 @@
         <groupId>com.yexuejc.util</groupId>
         <artifactId>util-parent</artifactId>
         <version>0.0.1</version>
+        <!-- 本地打包：使用相对关联路径 -->
+         <relativePath>../../utils</relativePath>
     </parent>
 
     <packaging>jar</packaging>
