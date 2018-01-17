@@ -10,11 +10,14 @@ import java.io.IOException;
  * @time 2017年11月3日 下午3:12:49
  */
 public class FileUtil {
+    private FileUtil() {
+    }
+
     private static final String TYPE_TAR_GZ = ".tar.gz";
     private static final String TAR_GZ = "tar.gz";
 
     public static String getFileType(String fileName) {
-        if (fileName.lastIndexOf(TYPE_TAR_GZ) >0) {
+        if (fileName.lastIndexOf(TYPE_TAR_GZ) > 0) {
             return TAR_GZ;
         }
         return fileName.substring(fileName.lastIndexOf(".") + 1);

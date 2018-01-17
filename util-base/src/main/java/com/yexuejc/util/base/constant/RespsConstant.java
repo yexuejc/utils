@@ -31,4 +31,10 @@ public class RespsConstant {
     public static final String CODE_ERROR = "E";
     public static final String MSG_ERROT_HTTP = "请求错误";
     public static final String MSG_ERROT_OPERATE = "操作错误";
+
+    /**
+     * 参数校验错误
+     */
+    public static final String CODE_VALIDATION = "V";
+    public static final String MSG_VALIDATION = "参数错误";
 }

@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
  * 日志处理类
  */
 public class LogUtil {
+    private LogUtil() {
+    }
+
     /**
      * 用于记录访问日志，输出到access.log
      */
