@@ -1,6 +1,7 @@
 package com.yexuejc.util.base.http;
 
 import com.yexuejc.util.base.constant.RespsConstant;
+import com.yexuejc.util.base.util.JsonUtil;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -125,10 +126,6 @@ public class Resps<T> implements Serializable {
 
     @Override
     public String toString() {
-        return "Resps{" +
-                "code='" + code + '\'' +
-                ", data=" + data +
-                ", msg=" + Arrays.toString(msg) +
-                '}';
+        return JsonUtil.obj2Json(this);
     }
 }

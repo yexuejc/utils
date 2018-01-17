@@ -3,6 +3,7 @@ package com.yexuejc.util.kotlin.mapper
 import com.yexuejc.util.kotlin.web.vo.UploadFileModel
 import org.apache.ibatis.annotations.*
 
+
 /**
  * 文件持久化层
  * @PackageName: com.yexuejc.util.kotlin
@@ -55,4 +56,44 @@ interface IFileMapper {
     )
     @Select("SELECT * from tb_update where update_id=#{id}")
     fun getUploadById(id: String): UploadFileModel
+
+    /**
+     * 根据code获取update
+     * @param type
+     * @param code
+     * @return
+     */
+    @Results(
+            Result(column = "update_id", property = "id")
+            , Result(column = "update_version", property = "version")
+            , Result(column = "update_code", property = "code")
+            , Result(column = "update_min_version", property = "minVersion")
+            , Result(column = "update_note", property = "note")
+            , Result(column = "update_ismust", property = "ismust")
+            , Result(column = "update_url", property = "fileUrl")
+            , Result(column = "update_crt_time", property = "crtTime")
+            , Result(column = "update_type", property = "type")
+            , Result(column = "update_filesize", property = "fileSize")
+    )
+    @Select("SELECT * from tb_update where update_type=#{type} and update_code>#{code} ORDER BY update_code desc LIMIT 0,1")
+    fun getUploadByType(type: String, code: Int): UploadFileModel
+
+    /**
+     * 根据type获取update
+     * @param type
+     * @return
+     */
+    @Results(Result(column = "update_id", property = "id")
+            , Result(column = "update_version", property = "version")
+            , Result(column = "update_code", property = "code")
+            , Result(column = "update_min_version", property = "minVersion")
+            , Result(column = "update_note", property = "note")
+            , Result(column = "update_ismust", property = "ismust")
+            , Result(column = "update_url", property = "fileUrl")
+            , Result(column = "update_crt_time", property = "crtTime")
+            , Result(column = "update_type", property = "type")
+            , Result(column = "update_filesize", property = "fileSize")
+    )
+    @Select("SELECT * from tb_update where update_type=#{type} ORDER BY update_code desc LIMIT 0,1")
+    fun getUploadNowByType(@Param("type") type: String): UploadFileModel
 }

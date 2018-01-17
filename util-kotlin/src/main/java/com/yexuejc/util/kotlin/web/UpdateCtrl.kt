@@ -5,6 +5,7 @@ import com.yexuejc.util.base.http.Resps
 import com.yexuejc.util.base.util.FileUtil
 import com.yexuejc.util.base.util.StrUtil
 import com.yexuejc.util.kotlin.service.IFileSrv
+import com.yexuejc.util.kotlin.utils.isNotEmpty
 import com.yexuejc.util.kotlin.web.vo.UploadFileModel
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,8 +36,7 @@ class UpdateCtrl {
 
     private val DATA_N = "N"
     private val DATA_Y = "Y"
-    private val TYPE_A = "A"
-    private val TYPE_I = "I"
+
 
     @Value(value = "\${upload.root.path}")
     val rootPath: String? = null
@@ -62,7 +62,7 @@ class UpdateCtrl {
             return mv
         }
         var filePath: String? = ""
-        if (file != null && !file.isEmpty) {
+        if (file.isNotEmpty()) {
             FileUtil.judeDirExists(File(rootPath))
             filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "_" + file.getOriginalFilename()
             // 转存文件
@@ -76,15 +76,16 @@ class UpdateCtrl {
         model.fileUrl = filePath
         model.fileSize = file.size
         logger.info("文件信息：{}", model.toString())
-        val result: Int? = fileSrv!!.save(model)
-        if (result!! > 0) {
-            mv.addObject("code", RespsConstant.CODE_SUCCESS)
-            mv.addObject("msg", "上传成功")
-            mv.addObject("data", filePath)
-            return mv
-        } else {
-            mv.addObject("code", RespsConstant.CODE_FAIL)
-            mv.addObject("msg", "上传成功，数据创建失败。文件路径：" + filePath)
+        val result: Int? = fileSrv?.save(model)
+        fileSrv?.save(model)?.let {
+            if (it > 0) {
+                mv.addObject("code", RespsConstant.CODE_SUCCESS)
+                mv.addObject("msg", "上传成功")
+                mv.addObject("data", filePath)
+            } else {
+                mv.addObject("code", RespsConstant.CODE_FAIL)
+                mv.addObject("msg", "上传成功，数据创建失败。文件路径：" + filePath)
+            }
         }
         return mv
     }
@@ -117,13 +118,14 @@ class UpdateCtrl {
         model.fileUrl = filePath
         model.fileSize = file.size
         logger.info("文件信息：{}", model.toString())
-        val result: Int? = fileSrv!!.save(model)
-        var resps = Resps<String>()
-        if (result!! > 0) {
-            return resps.setSucc(filePath, "上传成功")
-        } else {
-            return resps.setSucc(filePath, "上传成功，数据创建失败")
+        fileSrv?.save(model)?.let {
+            if (it > 0) {
+                return Resps<String>().setSucc(filePath, "上传成功")
+            } else {
+                return Resps<String>().setSucc(filePath, "上传成功，数据创建失败")
+            }
         }
+        return Resps.error(RespsConstant.MSG_ERROT_HTTP)
     }
 
     /**
