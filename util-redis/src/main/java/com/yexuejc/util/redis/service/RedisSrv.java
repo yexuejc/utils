@@ -1,5 +1,7 @@
 package com.yexuejc.util.redis.service;
 
+import com.yexuejc.util.redis.web.vo.InsertRedisVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -71,4 +73,7 @@ public interface RedisSrv {
     Map<Object, Object> getRedis4Consumer(String mobile);
 
     Map<Object, Object> getRedis4Admin(String mobile);
+
+
+    void insertConsumerSession(InsertRedisVO insertRedisVO);
 }

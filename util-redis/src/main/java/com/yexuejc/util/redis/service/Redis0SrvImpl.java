@@ -1,6 +1,7 @@
 package com.yexuejc.util.redis.service;
 
 import com.yexuejc.util.redis.autoconfigur.MutiRedisAutoConfiguration;
+import com.yexuejc.util.redis.constant.RedisConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,8 +17,7 @@ import java.util.*;
  */
 @Service(value = "redis0SrvImpl")
 public class Redis0SrvImpl extends RedisDefSrvImpl {
-    public static String PREFIX_ADMIN_SESSION = "admin-session";
-    public static final String PREFIX_CONSUMER_SESSION = "consumer-session";
+
 
 
     @Autowired
@@ -62,7 +62,7 @@ public class Redis0SrvImpl extends RedisDefSrvImpl {
      */
     @Override
     public Map<Object, Object> getRedis4Consumer(String mobile) {
-        return getRedis4Key(PREFIX_CONSUMER_SESSION + "-" + mobile);
+        return getRedis4Key(RedisConst.PREFIX_CONSUMER_SESSION + "-" + mobile);
     }
 
     /**
@@ -73,7 +73,7 @@ public class Redis0SrvImpl extends RedisDefSrvImpl {
      */
     @Override
     public Map<Object, Object> getRedis4Admin(String mobile) {
-        return getRedis4Key(PREFIX_ADMIN_SESSION + "-" + mobile);
+        return getRedis4Key(RedisConst.PREFIX_ADMIN_SESSION + "-" + mobile);
     }
 
 }
