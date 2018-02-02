@@ -10,7 +10,9 @@ import com.yexuejc.util.base.util.StrUtil;
  */
 public class MainTest {
     public static void main(String[] args) {
-        System.out.println(StrUtil.genUUID());
+        for (int i = 0; i < 10; i++) {
+            System.out.println(StrUtil.genUUID());
+        }
         System.out.println(StrUtil.toMD5("123456"));
     }
 }

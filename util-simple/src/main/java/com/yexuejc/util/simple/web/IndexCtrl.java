@@ -34,5 +34,13 @@ public class IndexCtrl {
         return "yexuejc-util Simple Project by Spring Boot.\t\n version:" + version;
     }
 
+    @RequestMapping(value = {"/test/index", "/test"})
+    public Object test() {
+        return "yexuejc-util Simple Project by Spring Boot.\t\n version:" + version;
+    }
 
+    @RequestMapping(value = {"/test/index2"})
+    public Object testIndex2() {
+        return "/test/index2";
+    }
 }
