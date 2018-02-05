@@ -70,10 +70,30 @@ public interface RedisSrv {
      */
     Map<Object, Object> getRedis4LoginPwd(String mobile);
 
+    /**
+     * 获取登录用户信息
+     * @param mobile
+     * @return
+     */
     Map<Object, Object> getRedis4Consumer(String mobile);
 
+    /**
+     * 获取后台管理用户信息
+     * @param mobile
+     * @return
+     */
     Map<Object, Object> getRedis4Admin(String mobile);
 
 
+    /**
+     * 添加redis
+     * @param insertRedisVO
+     */
     void insertConsumerSession(InsertRedisVO insertRedisVO);
+
+    /**
+     * 获取一个红包id
+     * @return
+     */
+    String getGift(String key);
 }

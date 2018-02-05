@@ -30,8 +30,11 @@ public class QueryRedisCtrl {
     @Autowired
     @Qualifier(value = "redis0SrvImpl")
     RedisSrv redis0Srv;
+    @Autowired
+    @Qualifier(value = "redis5SrvImpl")
+    RedisSrv redis5Srv;
 
-    @ApiOperation("获取所有。0:登录用户信息库；1：短信库")
+    @ApiOperation("获取所有。0:登录用户信息库；1：短信库;5：红包")
     @RequestMapping("/list/all/{code}")
     public Object listAll(@PathVariable int code) {
         switch (code) {
@@ -39,6 +42,8 @@ public class QueryRedisCtrl {
                 return JsonUtil.obj2Json(redis0Srv.getRedisAll());
             case 1:
                 return JsonUtil.obj2Json(redis1Srv.getRedisAll());
+            case 5:
+                return JsonUtil.obj2Json(redis5Srv.getRedisAll());
             default:
                 return null;
         }
@@ -138,5 +143,15 @@ public class QueryRedisCtrl {
     @RequestMapping("/loginpwd/{mobile}")
     public Object getRedis4LoginPwd(@PathVariable String mobile) {
         return JsonUtil.obj2Json(redis1Srv.getRedis4LoginPwd(mobile));
+    }
+
+    /**
+     * 获取一个红包id
+     *
+     * @return
+     */
+    @RequestMapping("/gift/{key}")
+    public Object getGift(@PathVariable String key) {
+        return redis5Srv.getGift(key);
     }
 }

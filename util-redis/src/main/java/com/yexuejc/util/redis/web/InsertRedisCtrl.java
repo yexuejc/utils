@@ -53,4 +53,24 @@ public class InsertRedisCtrl {
         insertRedisSrv.insertConsumerSession(insertRedisVO.setRedis(0, RedisConst.PREFIX_CONSUMER_SESSION));
         return Resps.success("添加成功");
     }
+    /**
+     * 添加登录用户信息
+     *
+     * @param insertRedisVO
+     * @param errors
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/gift-session", method = RequestMethod.POST,
+            produces = "application/json;charset=utf-8")
+    public Object giftSession(@RequestBody @Validated InsertRedisVO insertRedisVO,
+                                  Errors errors,
+                                  HttpServletResponse response) throws IOException {
+        if (errors.hasErrors()) {
+            return ValidUtil.errResps(response, errors);
+        }
+        insertRedisSrv.insertConsumerSession(insertRedisVO.setRedis(5, RedisConst.PREFIX_GIFT_SESSION));
+        return Resps.success("添加成功");
+    }
 }

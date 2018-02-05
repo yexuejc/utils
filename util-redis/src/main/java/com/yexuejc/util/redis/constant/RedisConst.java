@@ -10,6 +10,7 @@ package com.yexuejc.util.redis.constant;
 public class RedisConst {
     public static String PREFIX_ADMIN_SESSION = "admin-session";
     public static final String PREFIX_CONSUMER_SESSION = "consumer-session";
+    public static final String PREFIX_GIFT_SESSION = "gift";
 
     public static String PREFIX_CONSUMER_FLOW_SIGN_UP = "consumer-flow-sign-up";
     public static String PREFIX_CONSUMER_FLOW_FIND_PWD = "consumer-flow-find-pwd";

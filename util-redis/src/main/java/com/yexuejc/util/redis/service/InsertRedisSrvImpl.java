@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +28,9 @@ public class InsertRedisSrvImpl extends RedisDefSrvImpl implements RedisSrv {
     @Autowired
     @Qualifier(MutiRedisAutoConfiguration.BEAN_REDIS_TEMPLATE1)
     RedisTemplate<Object, Object> redisTemplate1;
+    @Autowired
+    @Qualifier(MutiRedisAutoConfiguration.BEAN_REDIS_TEMPLATE5)
+    RedisTemplate<Object, Object> redisTemplate5;
 
     @Override
     public void insertConsumerSession(InsertRedisVO insertRedisVO) {
@@ -49,6 +53,11 @@ public class InsertRedisSrvImpl extends RedisDefSrvImpl implements RedisSrv {
                 redisTemplate1.expire(
                         insertRedisVO.getType() + "-" + insertRedisVO.getKey(),
                         5 * 60, TimeUnit.SECONDS);
+                break;
+            case 5:
+                redisTemplate5.afterPropertiesSet();
+                redisTemplate5.opsForList().leftPushAll(insertRedisVO.getType() + "-" + insertRedisVO.getKey(),
+                        JsonUtil.json2Obj(insertRedisVO.getValue(), List.class));
                 break;
             default:
                 break;

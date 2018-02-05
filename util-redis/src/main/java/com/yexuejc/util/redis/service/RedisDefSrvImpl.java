@@ -66,4 +66,9 @@ public abstract class RedisDefSrvImpl implements RedisSrv {
     @Override
     public void insertConsumerSession(InsertRedisVO insertRedisVO) {
     }
+
+    @Override
+    public String getGift(String key) {
+        return null;
+    }
 }
