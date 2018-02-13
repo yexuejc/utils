@@ -4,6 +4,7 @@ import com.yexuejc.util.base.http.Resps;
 import com.yexuejc.util.base.util.ValidUtil;
 import com.yexuejc.util.redis.constant.RedisConst;
 import com.yexuejc.util.redis.service.RedisSrv;
+import com.yexuejc.util.redis.web.vo.GiftVO;
 import com.yexuejc.util.redis.web.vo.InsertRedisVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,6 +54,7 @@ public class InsertRedisCtrl {
         insertRedisSrv.insertConsumerSession(insertRedisVO.setRedis(0, RedisConst.PREFIX_CONSUMER_SESSION));
         return Resps.success("添加成功");
     }
+
     /**
      * 添加登录用户信息
      *
@@ -65,12 +67,28 @@ public class InsertRedisCtrl {
     @RequestMapping(value = "/gift-session", method = RequestMethod.POST,
             produces = "application/json;charset=utf-8")
     public Object giftSession(@RequestBody @Validated InsertRedisVO insertRedisVO,
-                                  Errors errors,
-                                  HttpServletResponse response) throws IOException {
+                              Errors errors,
+                              HttpServletResponse response) throws IOException {
         if (errors.hasErrors()) {
             return ValidUtil.errResps(response, errors);
         }
         insertRedisSrv.insertConsumerSession(insertRedisVO.setRedis(5, RedisConst.PREFIX_GIFT_SESSION));
         return Resps.success("添加成功");
+    }
+
+
+    /**
+     * 发红包
+     *
+     * @return
+     */
+    @RequestMapping(value = "/gift-add", method = RequestMethod.POST,
+            produces = "application/json;charset=utf-8")
+    public Object addGift(@RequestBody @Validated GiftVO giftVO, Errors errors, HttpServletResponse response) throws
+            IOException {
+        if (errors.hasErrors()) {
+            return ValidUtil.errResps(response, errors);
+        }
+        return null;
     }
 }

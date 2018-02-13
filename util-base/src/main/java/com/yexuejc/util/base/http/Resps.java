@@ -4,7 +4,6 @@ import com.yexuejc.util.base.constant.RespsConstant;
 import com.yexuejc.util.base.util.JsonUtil;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * 网络请求统一返回类
@@ -112,8 +111,9 @@ public class Resps<T> implements Serializable {
         return data;
     }
 
-    public void setData(T data) {
+    public Resps<T> setData(T data) {
         this.data = data;
+        return this;
     }
 
     public String[] getMsg() {

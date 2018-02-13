@@ -51,7 +51,7 @@ class UpdateCtrl {
     /**
      * 同步
      */
-    @RequestMapping(value = "/upload", produces = arrayOf("multipart/form-data;charset=UTF-8"))
+    @RequestMapping(value = "/upload", produces = ["multipart/form-data;charset=UTF-8"])
     fun upload(@RequestParam("file") file: MultipartFile, model: UploadFileModel,
                request: HttpServletRequest): ModelAndView {
         var mv = ModelAndView("succ")
@@ -76,7 +76,6 @@ class UpdateCtrl {
         model.fileUrl = filePath
         model.fileSize = file.size
         logger.info("文件信息：{}", model.toString())
-        val result: Int? = fileSrv?.save(model)
         fileSrv?.save(model)?.let {
             if (it > 0) {
                 mv.addObject("code", RespsConstant.CODE_SUCCESS)
@@ -93,9 +92,8 @@ class UpdateCtrl {
     /**
      * 异步上传
      */
-    @RequestMapping(value = "/upload/json")
+    @RequestMapping(value = ["/upload/json"])
     fun uploadAjax(model: UploadFileModel, request: HttpServletRequest): Any {
-        var mv = ModelAndView("succ")
         var checkResps = checkUploadFileModel(model)
         if (checkResps.code != RespsConstant.CODE_SUCCESS) {
             return checkResps
@@ -105,7 +103,7 @@ class UpdateCtrl {
         // 获取上传文件名
         val file = multipartRequest.getFile("file")
 
-        var filePath: String? = ""
+        var filePath: String?
         if (file != null && !file.isEmpty) {
             FileUtil.judeDirExists(File(rootPath))
             filePath = rootPath + "/v_" + model.version + "_" + System.currentTimeMillis() + "_" + file.getOriginalFilename()

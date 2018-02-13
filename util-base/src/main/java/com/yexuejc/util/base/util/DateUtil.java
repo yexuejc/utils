@@ -71,7 +71,7 @@ public class DateUtil {
     /**
      * 日期字符串转date
      *
-     * @param date
+     * @param dateStr
      * @return Date
      * @throws ParseException
      */
