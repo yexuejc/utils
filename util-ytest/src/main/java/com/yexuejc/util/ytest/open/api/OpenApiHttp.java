@@ -23,6 +23,7 @@ public class OpenApiHttp extends HttpsPost {
         Map params = new HashMap<>();
         params.put("password", RSA.publicEncrypt("123456", RSA.getPublicKey(publicKey)));
         params.put("account", "13512345678");
+        params.put("timestamp", System.currentTimeMillis());
         String ensign = StrUtil.getSignContent(params);
         System.out.println(ensign);
         params.put("sign", StrUtil.toMD5(ensign));

@@ -1,6 +1,7 @@
 package com.yexuejc.util.base.http;
 
-import com.yexuejc.util.base.constant.RespsConstant;
+
+import com.yexuejc.util.base.constant.RespsConsts;
 import com.yexuejc.util.base.util.JsonUtil;
 
 import java.io.Serializable;
@@ -55,7 +56,7 @@ public class Resps<T> implements Serializable {
     }
 
     public Resps<T> setSucc(T t) {
-        setSucc(t, RespsConstant.MSG_SUCCESS_OPERATE);
+        setSucc(t, RespsConsts.MSG_SUCCESS_OPERATE);
         return this;
     }
 
@@ -66,21 +67,31 @@ public class Resps<T> implements Serializable {
 
     public Resps<T> setSucc(T t, String[] msg) {
         this.setData(t);
-        this.setCode(RespsConstant.CODE_SUCCESS);
+        this.setCode(RespsConsts.CODE_SUCCESS);
+        this.setMsg(msg);
+        return this;
+    }
+
+    public Resps setErr(String code, String[] msg) {
+        this.setCode(code);
         this.setMsg(msg);
         return this;
     }
 
     public static Resps success(String msg) {
-        return new Resps(RespsConstant.CODE_SUCCESS, msg);
+        return new Resps(RespsConsts.CODE_SUCCESS, msg);
+    }
+
+    public static Resps success() {
+        return new Resps(RespsConsts.CODE_SUCCESS, RespsConsts.MSG_SUCCESS_OPERATE);
     }
 
     public static Resps error(String msg) {
-        return new Resps(RespsConstant.CODE_ERROR, msg);
+        return new Resps(RespsConsts.CODE_ERROR, msg);
     }
 
     public static Resps fail(String msg) {
-        return new Resps(RespsConstant.CODE_FAIL, msg);
+        return new Resps(RespsConsts.CODE_FAIL, msg);
     }
 
     public static Resps error(String code, String msg) {
@@ -111,9 +122,8 @@ public class Resps<T> implements Serializable {
         return data;
     }
 
-    public Resps<T> setData(T data) {
+    public void setData(T data) {
         this.data = data;
-        return this;
     }
 
     public String[] getMsg() {

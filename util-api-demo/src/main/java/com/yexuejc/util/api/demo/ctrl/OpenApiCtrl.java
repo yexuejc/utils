@@ -2,7 +2,9 @@ package com.yexuejc.util.api.demo.ctrl;
 
 import com.yexuejc.util.api.demo.common.RSA;
 import com.yexuejc.util.api.demo.util.FormatUtils;
+import com.yexuejc.util.base.http.Resps;
 import com.yexuejc.util.base.util.JsonUtil;
+import com.yexuejc.util.base.util.JwtUtil;
 import com.yexuejc.util.base.util.StrUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,13 @@ import java.util.Map;
 
 import static com.yexuejc.util.api.demo.common.RSA.getPublicKey;
 
+/**
+ * 针对开放接口openapi的解决方案：
+ * 1.防泄漏：敏感信息RSA非对称加密（如密码）
+ * 2.防篡改：参数MD5 签名
+ * 3.防重复请求：时间戳
+ * 4.token授权
+ */
 @RestController
 @RequestMapping("/openapi")
 public class OpenApiCtrl {
@@ -25,12 +34,26 @@ public class OpenApiCtrl {
     //公钥
     public static final String publicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIkqOW5SffkCdP0BJXMuQGkU6vt6DuJSfD7yDiLfl6-UlBTg1Y9w1G4suv9G8UGDtzYmB5Vz29-1FVd445VybF8CAwEAAQ";
 
+    /**
+     * @param account   账号
+     * @param password  密码
+     * @param sign      md5签名
+     * @param timestamp 时间戳
+     * @return
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
     @RequestMapping("/login")
-    public Object login(String account, String password, String sign) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public Object login(String account, String password, String sign, Long timestamp) throws InvalidKeySpecException, NoSuchAlgorithmException {
         System.out.println("=======================================================");
+        //时间戳在当前时间前一分钟内有效
+        if (timestamp == null || timestamp > System.currentTimeMillis() || timestamp < System.currentTimeMillis() - 1000 * 60) {
+            return "请求过期";
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("account", account);
         map.put("password", password);
+        map.put("timestamp", timestamp);
         String ensign = StrUtil.getSignContent(map);
         System.out.println("参数：" + ensign);
         System.out.println("MD5:" + StrUtil.toMD5(ensign));
@@ -43,13 +66,17 @@ public class OpenApiCtrl {
         if (!"123456".equals(privateDecryptPassword)) {
             return "密码错误";
         }
-        return "密码正确";
+        //生成token 缓存 redis
+        String token = JwtUtil.compact(account);
+        return Resps.success().setSucc(token);
     }
 
 
     public static void main(String[] args) throws Exception {
 //        testRSA();
         testMd5();
+        long timestamp = System.currentTimeMillis();
+        System.out.printf(String.valueOf(String.valueOf(timestamp).length()));
     }
 
     private static void testRSA() throws Exception {
