@@ -270,5 +270,8 @@
         <module>util-exp</module>
         <module>util-redis</module>
         <module>util-kotlin</module>
+        <module>util-gift</module>
+        <module>util-ytest</module>
+        <module>util-api-demo</module>
     </modules>
 </project>

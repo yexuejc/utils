@@ -1,6 +1,6 @@
 package com.yexuejc.util.ytest.hscf.api.model;
 
-import com.yexuejc.util.ytest.utils.StrUtil;
+import com.yexuejc.util.base.util.StrUtil;
 
 import java.util.List;
 

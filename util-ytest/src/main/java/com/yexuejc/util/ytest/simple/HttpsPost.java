@@ -32,7 +32,7 @@ public class HttpsPost {
 	 * 普通post请求
 	 */
 	@Test
-	public void getImages() {
+	public void getImages() throws Exception {
 		Https.requestPost(HttpsValues.GET_IMAGE_URLD, new HashMap<>(), new Https.Callback() {
 
 			@Override
