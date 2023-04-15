@@ -45,7 +45,7 @@
         <alipay-sdk-java.version>20171023143759</alipay-sdk-java.version>
         <!-- 微信相关 -->
         <WXPay-SDK-Java.version>0.0.4</WXPay-SDK-Java.version>
-        <postgresql.version>9.4.1212</postgresql.version>
+        <postgresql.version>42.3.8</postgresql.version>
     </properties>
     <!-- 声明包版本 继承项目自引入 -->
     <dependencyManagement>
